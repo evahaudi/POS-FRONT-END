@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton, Grid, Typography } from '@mui/material';
 import Box from '@material-ui/core/Box';
-import { LinkedIn, Facebook, Twitter } from '@mui/icons-material';
+import { LinkedIn, Facebook, Twitter, GitHub } from '@mui/icons-material';
 
 const Footer = () => {
     return (
@@ -13,14 +13,17 @@ const Footer = () => {
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} textAlign="center">
-                    <IconButton color="white" aria-label="LinkedIn" href="https://www.linkedin.com/">
+                    <IconButton color="white" aria-label="LinkedIn" href="https://www.linkedin.com/in/everlyne-akinyi-90683a1b5/">
                         <LinkedIn />
                     </IconButton>
                     <IconButton color="white" aria-label="Facebook" href="https://www.facebook.com/">
                         <Facebook />
                     </IconButton>
-                    <IconButton color="white" aria-label="Twitter" href="https://twitter.com/">
+                    <IconButton color="white" aria-label="Twitter" href="https://twitter.com/EvahAudi">
                         <Twitter />
+                    </IconButton>
+                    <IconButton color="white" aria-label="GitHub" href="https://github.com/evahaudi">
+                        <GitHub />
                     </IconButton>
                 </Grid>
             </Grid>
