@@ -46,7 +46,7 @@ const Profile = () => {
                 if (storedUsername) {
                     setUsername(storedUsername)
                     const response = await axios.get(
-                        `https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/getuserbyusername/?username=${storedUsername}`
+                        `https://evahluk-restful-apis.onrender.com/api/getuserbyusername/?username=${storedUsername}`
                     )
                     setUserDetails(response.data)
                 }
@@ -57,7 +57,7 @@ const Profile = () => {
         fetchUserDetails()
     }, [username])
 
-    const imageUrl = `http://localhost:8000${userDetails.user_image}`
+    const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${userDetails.user_image}`
     const handleUpdateDetails = () => {}
     
     return (

@@ -187,11 +187,11 @@ const Register = () => {
         try {
             let roleEndpoint = ''
             if (role === 'Waiter') {
-                roleEndpoint = 'https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/signup/waiter/'
+                roleEndpoint = 'https://evahluk-restful-apis.onrender.com/api/signup/waiter/'
             } else if (role === 'Chef') {
-                roleEndpoint = 'https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/signup/chef/'
+                roleEndpoint = 'https://evahluk-restful-apis.onrender.com/api/signup/chef/'
             } else if (role === 'Manager') {
-                roleEndpoint = 'https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/signup/manager/'
+                roleEndpoint = 'https://evahluk-restful-apis.onrender.com/api/signup/manager/'
             }
 
             const requestData = {

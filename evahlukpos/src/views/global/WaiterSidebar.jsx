@@ -90,7 +90,7 @@ const WaiterSidebar = () => {
                 if (storedUsername) {
                     setUsername(storedUsername)
                     const response = await axios.get(
-                        `https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/getuserbyusername/?username=${storedUsername}`
+                        `https://evahluk-restful-apis.onrender.com/api/getuserbyusername/?username=${storedUsername}`
                     )
                     setUserDetails(response.data)
                 }
@@ -105,7 +105,7 @@ const WaiterSidebar = () => {
         if (userDetails && userDetails.user_image) {
             return (
                 <Avatar
-                    src={`http://localhost:8000${userDetails.user_image}`}
+                    src={`https://evahluk-restful-apis.onrender.com/media/user_images/${userDetails.user_image}`}
                     alt="Profile Picture"
                 />
             )
@@ -130,7 +130,7 @@ const WaiterSidebar = () => {
             if (storedToken) {
                 config.headers['Authorization'] = `Token ${storedToken}`
             }
-            await axios.post('https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/logout/', null, config)
+            await axios.post('https://evahluk-restful-apis.onrender.com/api/logout/', null, config)
             localStorage.removeItem('token')
             window.location.href = '/login'
         } catch (error) {

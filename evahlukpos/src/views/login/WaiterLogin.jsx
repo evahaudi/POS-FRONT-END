@@ -4,7 +4,7 @@ import useAuth from '../../hooks/useAuth'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import axios from 'axios'
-const LOGIN_URL = 'https://restaurant-management-pos-11a9f9c27639.herokuapp.com/api/login/'
+const LOGIN_URL = 'https://evahluk-restful-apis.onrender.com/api/login/'
 
 const WaiterLogin = () => {
     const { setAuth } = useAuth()
