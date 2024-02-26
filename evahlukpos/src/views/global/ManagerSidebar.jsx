@@ -242,7 +242,7 @@ const ManagerSidebar = () => {
                     </ListItem>
                     <ListItem
                         className={classes.listItem}
-                        selected={currentPage === 'Managestocks'}
+                        selected={currentPage === 'Managestock'}
                         button
                         onClick={() => handlePageChange('Managestock')}
                     >

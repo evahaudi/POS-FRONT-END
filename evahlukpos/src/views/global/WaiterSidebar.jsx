@@ -105,6 +105,7 @@ const WaiterSidebar = () => {
         if (userDetails && userDetails.user_image) {
             return (
                 <Avatar
+                    // src={`https://evahluk-restful-apis.onrender.com/media/user_images/${userDetails.user_image}`}
                     src={`https://evahluk-restful-apis.onrender.com/media/user_images/${userDetails.user_image}`}
                     alt="Profile Picture"
                 />
