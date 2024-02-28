@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageStaff = () => {
     const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
     const [staffData, setStaffData] = useState([]);
     const [selectedRows, setSelectedRows] = useState(null);

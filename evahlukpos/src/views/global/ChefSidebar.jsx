@@ -15,6 +15,7 @@ import Profile from '../pages/ChefProfile'
 import ManageOrders from '../pages/Manageorders'
 import ManageIngredients from '../pages/ManageIngredients'
 import ChefDashboard from '../dashboard/chefdashbboard'
+import ConfirmOrders from '../pages/ConfirmOrders'
 
 
 const drawerWidth = 240
@@ -146,6 +147,8 @@ const ChefSidebar = () => {
                 return <ManageIngredients />
             case 'Manageorders':
                 return <ManageOrders />
+            case 'Confirmorders':
+                return <ConfirmOrders />
             default:
                 return <ChefDashboard />
         }
@@ -228,6 +231,14 @@ const ChefSidebar = () => {
                         onClick={() => handlePageChange('Manageorders')}
                     >
                         <ListItemText primary="Manage Orders" />
+                    </ListItem>
+                    <ListItem
+                        className={classes.listItem}
+                        selected={currentPage === 'Confirmorders'}
+                        button
+                        onClick={() => handlePageChange('Confirmorders')}
+                    >
+                        <ListItemText primary="Confirm Orders" />
                     </ListItem>
                     <ListItem
                         className={classes.listItem}

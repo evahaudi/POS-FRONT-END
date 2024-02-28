@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Modal, Box, useTheme ,Typography,Input} from '@material-ui/core';
+import { Button, Modal, Box ,Typography,Input} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 
@@ -119,7 +118,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageSales = () => {
   const classes = useStyles();
-  const theme = useTheme();
   const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
   const [editedName, setEditedName] = useState('');

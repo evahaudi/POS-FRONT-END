@@ -62,7 +62,7 @@ const Profile = () => {
     
     return (
         <>
-            <div className={classes.paper} elevation={3}>
+            <Paper className={classes.paper} elevation={3}>
                 <Typography variant="h4" align="center" gutterBottom>
                  Profile Details!
                 </Typography>
@@ -168,7 +168,7 @@ const Profile = () => {
                 >
                     Update Details
                 </Button>
-            </div>
+            </Paper>
             <br />
             <br />
             <br />
