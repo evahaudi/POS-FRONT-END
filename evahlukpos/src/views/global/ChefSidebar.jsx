@@ -13,6 +13,7 @@ import axios from 'axios'
 import Avatar from '@material-ui/core/Avatar'
 import Profile from '../pages/ChefProfile'
 import ManageOrders from '../pages/Manageorders'
+import ManageIngredients from '../pages/ManageIngredients'
 import ChefDashboard from '../dashboard/chefdashbboard'
 
 
@@ -141,6 +142,8 @@ const ChefSidebar = () => {
                 return <ChefDashboard />
             case 'Profile':
                 return <Profile />
+            case 'Manageingredients':
+                return <ManageIngredients />
             case 'Manageorders':
                 return <ManageOrders />
             default:
@@ -225,6 +228,14 @@ const ChefSidebar = () => {
                         onClick={() => handlePageChange('Manageorders')}
                     >
                         <ListItemText primary="Manage Orders" />
+                    </ListItem>
+                    <ListItem
+                        className={classes.listItem}
+                        selected={currentPage === 'Manageingredients'}
+                        button
+                        onClick={() => handlePageChange('Manageingredients')}
+                    >
+                        <ListItemText primary="Manage Ingredients" />
                     </ListItem>
                 </List>
             </Drawer>

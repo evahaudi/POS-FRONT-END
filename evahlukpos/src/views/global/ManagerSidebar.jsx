@@ -11,6 +11,9 @@ import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import ManageSales from '../pages/Managesales'
 import ManageStock from '../pages/Managestock'
+import ManageStaff from '../pages/ManageStaff'
+import ManageTable from '../pages/ManageTable'
+import ManageMenu from '../pages/ManageMenu'
 import ManageEmployees from '../pages/Manageemployees'
 import Profile from '../pages/ManagerProfile'
 import ManageOrders from '../pages/Manageorders'
@@ -169,10 +172,17 @@ const ManagerSidebar = () => {
                 return <ManageSales />
             case 'Manageemployees':
                 return <ManageEmployees />
+            case 'Managetable':
+                return <ManageTable />
             case 'Profile':
                 return <Profile />
             case 'Manageorders':
                 return <ManageOrders />
+            case 'Managestaff':
+                return <ManageStaff />
+            case 'Managemenu':
+                return <ManageMenu />
+
             default:
                 return <ManagerDashboard />
         }
@@ -266,6 +276,22 @@ const ManagerSidebar = () => {
                     </ListItem>
                     <ListItem
                         className={classes.listItem}
+                        selected={currentPage === 'Managemenu'}
+                        button
+                        onClick={() => handlePageChange('Managemenu')}
+                    >
+                        <ListItemText primary="Manage Menu" />
+                    </ListItem>
+                    <ListItem
+                        className={classes.listItem}
+                        selected={currentPage === 'Managestaff'}
+                        button
+                        onClick={() => handlePageChange('Managestaff')}
+                    >
+                        <ListItemText primary="Manage Staff " />
+                    </ListItem>
+                    <ListItem
+                        className={classes.listItem}
                         selected={currentPage === 'Profile'}
                         button
                         onClick={() => handlePageChange('Profile')}
@@ -279,6 +305,14 @@ const ManagerSidebar = () => {
                         onClick={() => handlePageChange('Manageorders')}
                     >
                         <ListItemText primary="Manage Orders" />
+                    </ListItem>
+                    <ListItem
+                        className={classes.listItem}
+                        selected={currentPage === 'Managetable'}
+                        button
+                        onClick={() => handlePageChange('Managetable')}
+                    >
+                        <ListItemText primary="Manage Tables" />
                     </ListItem>
                 </List>
             </Drawer>

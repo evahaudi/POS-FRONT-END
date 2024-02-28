@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('sm')]: {
             padding: theme.spacing(1),
             width: '370px',
-
         },
         [theme.breakpoints.down('xs')]: {
             minHeight: '200px', // Adjust minimum height for smaller screens
@@ -41,12 +40,10 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiDataGrid-root': {
             fontSize: 30,
             [theme.breakpoints.down('sm')]: {
-                
                 fontSize: 8,
                 minWidth: '350px'
             },
         },
-
         '& .MuiDataGrid-columnHeaders': {
             fontSize: 18,
             color: 'white',
@@ -64,16 +61,15 @@ const useStyles = makeStyles((theme) => ({
                 overflow: 'visible',
             },
         },
-           
         "& .MuiDataGrid-Pagination-selectionLabel": {
-              fontSize:20,
+            fontSize:20,
             [theme.breakpoints.down('sm')]: {
                 fontSize: 5,
             },
-          },
+        },
         '& .MuiDataGrid-row:nth-child(even)':{
             backgroundColor: 'grey'
-          },
+        },
         '& .MuiDataGrid-cell': {
             fontSize: 12,
             whiteSpace: 'unset',
@@ -119,48 +115,51 @@ const useStyles = makeStyles((theme) => ({
                 color: 'green'
             },
         },
-
     },
 }));
 
-
-const ManageStock = () => {
+const ManageMenu = () => {
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
-    const [stockData, setStockData] = useState([]);
+    const [menuData, setMenuData] = useState([]);
     const [selectedRows, setSelectedRows] = useState(null);
-    const [modalStock, setModalStock] = useState({
-        stock_name: '',
-        original_quantity: '',
+    const [modalMenu, setModalMenu] = useState({
+        menuitem_name: '',
+        is_vegetarian: false,
+        description: '',
+        is_available: true,
+        image: '',
+        category: '',
         price: '',
-        unit: '',
     });
-    const [newStock, setNewStock] = useState({
-        stock_name: '',
-        original_quantity: '',
+    const [newMenu, setNewMenu] = useState({
+        menuitem_name: '',
+        is_vegetarian: false,
+        description: '',
+        is_available: true,
+        image: '',
+        category: '',
         price: '',
-        unit: '',
     });
-
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        fetchStockData();
+        fetchMenuData();
     }, []);
 
-    const fetchStockData = () => {
-        axios.get('https://evahluk-restful-apis.onrender.com/api/stock/getall/')
+    const fetchMenuData = () => {
+        axios.get('http://127.0.0.1:8000/api/menu/get')
             .then(response => {
-                setStockData(response.data);
+                setMenuData(response.data);
             })
             .catch(error => {
-                console.error('Error fetching stock data:', error);
+                console.error('Error fetching menu data:', error);
             });
     };
 
-    const handleCreateStock = () => {
-        const { stock_name, original_quantity, price, unit } = newStock;
+    const handleCreateMenu = () => {
+        const { menuitem_name, is_vegetarian, description, is_available, image, category, price } = newMenu;
         const token = localStorage.getItem('token');
 
         if (!token) {
@@ -174,23 +173,34 @@ const ManageStock = () => {
             },
         };
 
-        const url = `http://127.0.0.1:8000/api/stock/create/?stock_name=${stock_name}&price=${price}&original_quantity=${original_quantity}&unit=${unit}`;
+        const url = `http://127.0.0.1:8000/api/menu/create`;
 
-        axios.post(url, {}, config)
+        axios.post(url, {
+            menuitem_name,
+            is_vegetarian,
+            description,
+            is_available,
+            image,
+            category,
+            price
+        }, config)
             .then(response => {
-                console.log('Stock created successfully:', response.data);
-                fetchStockData();
-                Swal.fire('Success', 'Stock created successfully', 'success');
-                setNewStock({
-                    stock_name: '',
-                    original_quantity: '',
+                console.log('Menu item created successfully:', response.data);
+                fetchMenuData();
+                Swal.fire('Success', 'Menu item created successfully', 'success');
+                setNewMenu({
+                    menuitem_name: '',
+                    is_vegetarian: false,
+                    description: '',
+                    is_available: true,
+                    image: '',
+                    category: '',
                     price: '',
-                    unit: '',
                 });
             })
             .catch(error => {
-                console.error('Error creating stock:', error);
-                Swal.fire('Error', 'Failed to create stock stock_name Already exist', 'error');
+                console.error('Error creating menu item:', error);
+                Swal.fire('Error', 'Failed to create menu item', 'error');
             });
     };
 
@@ -206,7 +216,7 @@ const ManageStock = () => {
 
         Swal.fire({
             title: 'Are you sure?',
-            text: 'You will not be able to recover this stock item!',
+            text: 'You will not be able to recover this menu item!',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -215,16 +225,16 @@ const ManageStock = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/stock/delete/?id=${id}`)
+                axios.delete(`http://127.0.0.1:8000/api/menu/delete/${id}`)
                     .then(response => {
-                        console.log('Stock deleted successfully:', response.data);
-                        fetchStockData();
-                        Swal.fire('Deleted!', 'Your stock has been deleted.', 'success');
+                        console.log('Menu item deleted successfully:', response.data);
+                        fetchMenuData();
+                        Swal.fire('Deleted!', 'Your menu item has been deleted.', 'success');
                         setSelectedRows(null); // Deselect the item after deletion
                     })
                     .catch(error => {
-                        console.error('Error deleting stock:', error);
-                        Swal.fire('Error', 'Failed to delete the selected stock', 'error');
+                        console.error('Error deleting menu item:', error);
+                        Swal.fire('Error', 'Failed to delete the selected menu item', 'error');
                     });
             }
         });
@@ -240,67 +250,68 @@ const ManageStock = () => {
             return;
         }
 
-        // Merge selectedRows and modalStock objects
-        const updatedFields = { ...selectedRows, ...modalStock };
+        // Merge selectedRows and modalMenu objects
+        const updatedFields = { ...selectedRows, ...modalMenu };
 
         // Remove the 'id' field from the merged object
         delete updatedFields.id;
-        delete updatedFields.user;
-        delete updatedFields.created_by;
-        delete updatedFields.created_at;
 
-        // Extract field names and values from the updatedFields object
-        const fieldNames = Object.keys(updatedFields);
-        const fieldValues = Object.values(updatedFields);
+        const id = selectedRows.id;
+        const token = localStorage.getItem('token');
 
-        // Construct updatedFields object with field_name and field_value properties
-        const updatedFieldsObj = {
-            field_name: fieldNames,
-            field_value: fieldValues,
+        if (!token) {
+            console.error('User token not found.');
+            return;
+        }
+
+        const config = {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
         };
 
-        console.log('Updated Fields:', updatedFieldsObj);
+        axios.put(`http://127.0.0.1:8000/api/menu/update/${id}`, updatedFields, config)
+            .then(response => {
+                console.log('Menu item updated successfully:', response.data);
+                fetchMenuData(); // Refresh data
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'Menu item updated successfully!',
+                });
 
-        const updatePromise = axios.put(`http://127.0.0.1:8000/api/stock/update/?id=${selectedRows.id}`, updatedFieldsObj);
-
-        updatePromise.then(response => {
-            console.log('Stock updated successfully:', response.data);
-            fetchStockData(); // Refresh data
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Stock updated successfully!',
+                setOpen(false);
+                setSelectedRows(null);
+            })
+            .catch(error => {
+                console.error('Error updating menu item:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Failed to update menu item. Please try again later.',
+                });
             });
-
-            setOpen(false);
-            setSelectedRows(null);
-        }).catch(error => {
-            console.error('Error updating stock:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: 'Failed to update stock. Please try again later.',
-            });
-        });
     };
 
     const columns = [
-        { field: 'id', headerName: 'Id' ,},
-        { field: 'stock_name', headerName: 'Name',  },
-        { field: 'original_quantity', headerName: 'Quantity',  },
-        { field: 'price', headerName: 'Price',  },
-        { field: 'unit', headerName: 'Unit' , },
+        { field: 'id', headerName: 'Id' },
+        { field: 'menuitem_name', headerName: 'Name' },
+        { field: 'is_vegetarian', headerName: 'Vegetarian', type: 'boolean' },
+        { field: 'description', headerName: 'Description' },
+        { field: 'is_available', headerName: 'Available', type: 'boolean' },
+        { field: 'image', headerName: 'Image' },
+        { field: 'category', headerName: 'Category' },
+        { field: 'price', headerName: 'Price' },
         {
             field: 'edit',
             headerName: 'Edit',
             renderCell: (params) => (
                 <Button
-                    className="editButton"
                     variant="contained"
                     color="primary"
                     onClick={() => handleEdit(params.row)}
                 >
-                    update
+                    Edit
                 </Button>
             ),
         },
@@ -309,30 +320,29 @@ const ManageStock = () => {
             headerName: 'Delete',
             renderCell: (params) => (
                 <Button
-                    className="editButton"
                     variant="contained"
-                    color="primary"
+                    color="secondary"
                     onClick={() => handleDelete(params.row)}
                 >
-                    delete
+                    Delete
                 </Button>
             ),
         },
-
     ];
-
 
     const handleEdit = (row) => {
         setSelectedRows(row);
-        setModalStock({
-            stock_name: row.stock_name,
-            original_quantity: row.original_quantity,
+        setModalMenu({
+            menuitem_name: row.menuitem_name,
+            is_vegetarian: row.is_vegetarian,
+            description: row.description,
+            is_available: row.is_available,
+            image: row.image,
+            category: row.category,
             price: row.price,
-            unit: row.unit,
         });
         setOpen(true);
     };
-
 
     const handleCloseModal = () => {
         setOpen(false);
@@ -340,7 +350,7 @@ const ManageStock = () => {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setNewStock(prevState => ({
+        setNewMenu(prevState => ({
             ...prevState,
             [name]: value,
         }));
@@ -348,8 +358,7 @@ const ManageStock = () => {
 
     const handleModalInputChange = (event) => {
         const { name, value } = event.target;
-        console.log(`Updating ${name} to ${value}`);
-        setModalStock(prevState => ({
+        setModalMenu(prevState => ({
             ...prevState,
             [name]: value,
         }));
@@ -359,7 +368,7 @@ const ManageStock = () => {
         <>
             <div className={classes.container}>
                 <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>
-                    Manage Stock
+                    Manage Menu
                 </Typography>
                 <Card className={classes.card}>
                     <CardContent>
@@ -367,73 +376,87 @@ const ManageStock = () => {
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="subtitle1" color="textPrimary">Name</Typography>
                                 <TextField
-                                    id="stock-name"
                                     type="text"
-                                    name="stock_name"
-                                    value={newStock.stock_name}
+                                    name="menuitem_name"
+                                    value={newMenu.menuitem_name}
                                     onChange={handleInputChange}
                                     variant="outlined"
-                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <Typography variant="subtitle1" color="textPrimary">Quantity</Typography>
+                                <Typography variant="subtitle1" color="textPrimary">Is Vegetarian</Typography>
                                 <TextField
-                                    id="original-quantity"
-                                    type="number"
-                                    name="original_quantity"
-                                    value={newStock.original_quantity}
+                                    type="text"
+                                    name="is_vegetarian"
+                                    value={newMenu.is_vegetarian}
                                     onChange={handleInputChange}
                                     variant="outlined"
-                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Description</Typography>
+                                <TextField
+                                    type="text"
+                                    name="description"
+                                    value={newMenu.description}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Is Available</Typography>
+                                <TextField
+                                    type="text"
+                                    name="is_available"
+                                    value={newMenu.is_available}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Image</Typography>
+                                <TextField
+                                    type="text"
+                                    name="image"
+                                    value={newMenu.image}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Category</Typography>
+                                <TextField
+                                    type="text"
+                                    name="category"
+                                    value={newMenu.category}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="subtitle1" color="textPrimary">Price</Typography>
                                 <TextField
-                                    id="price"
-                                    type="number"
-                                    name="price"
-                                    value={newStock.price}
-                                    onChange={handleInputChange}
-                                    variant="outlined"
-                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Typography variant="subtitle1" color="textPrimary">Unit</Typography>
-                                <TextField
-                                    id="unit"
                                     type="text"
-                                    name="unit"
-                                    value={newStock.unit}
+                                    name="price"
+                                    value={newMenu.price}
                                     onChange={handleInputChange}
                                     variant="outlined"
-                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <Button className="editButton" variant="contained" color="primary" onClick={handleCreateStock}>Create</Button>
+                                <Button variant="contained" color="primary" onClick={handleCreateMenu}>Create</Button>
                             </Grid>
                         </Grid>
                     </CardContent>
                 </Card>
             </div>
-            <br />
-
 
             <div className={classes.container}>
                 <div className={classes.dataGrid}>
                     <DataGrid
-                        rows={stockData}
+                        rows={menuData}
                         columns={columns}
                         checkboxSelection
-                        
-
                     />
                     <Modal
                         open={open}
@@ -455,68 +478,81 @@ const ManageStock = () => {
                                     p: 4,
                                 }}
                             >
-                                <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>Update Stock Details</Typography>
+                                <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>Edit Menu Item</Typography>
                                 {selectedRows && (
                                     <>
                                         <Grid container spacing={2}>
-                                            <Grid item xs={8} sm={4}>
+                                            <Grid item xs={12} sm={6}>
                                                 <Typography variant="subtitle1" color="textPrimary">Name</Typography>
                                                 <TextField
-                                                    id="stock-name"
                                                     type="text"
-                                                    name="stock_name"
-                                                    variant="outlined"
-                                                    value={modalStock.stock_name}
+                                                    name="menuitem_name"
+                                                    value={modalMenu.menuitem_name}
                                                     onChange={handleModalInputChange}
-                                                    fullWidth
-                                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
+                                                    variant="outlined"
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Quantity</Typography>
+                                                <Typography variant="subtitle1" color="textPrimary">Is Vegetarian</Typography>
                                                 <TextField
-                                                    id="original-quantity"
-                                                    type="number"
-                                                    name="original_quantity"
-                                                    variant="outlined"
-                                                    value={modalStock.original_quantity}
+                                                    type="text"
+                                                    name="is_vegetarian"
+                                                    value={modalMenu.is_vegetarian}
                                                     onChange={handleModalInputChange}
-                                                    fullWidth
-                                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Description</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="description"
+                                                    value={modalMenu.description}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Is Available</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="is_available"
+                                                    value={modalMenu.is_available}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Image</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="image"
+                                                    value={modalMenu.image}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Category</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="category"
+                                                    value={modalMenu.category}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
                                                 />
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
                                                 <Typography variant="subtitle1" color="textPrimary">Price</Typography>
                                                 <TextField
-                                                    id="price"
-                                                    type="number"
-                                                    name="price"
-                                                    variant="outlined"
-                                                    value={modalStock.price}
-                                                    onChange={handleModalInputChange}
-                                                    fullWidth
-                                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Unit</Typography>
-                                                <TextField
-                                                    id="unit"
                                                     type="text"
-                                                    name="unit"
-                                                    variant="outlined"
-                                                    value={modalStock.unit}
+                                                    name="price"
+                                                    value={modalMenu.price}
                                                     onChange={handleModalInputChange}
-                                                    fullWidth
-                                                    InputLabelProps={{ style: { color: 'black' } }} // Set label color
-                                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }} // Set input font size
+                                                    variant="outlined"
                                                 />
                                             </Grid>
                                         </Grid>
-
                                     </>
                                 )}
                                 <br />
@@ -524,19 +560,17 @@ const ManageStock = () => {
                                     onClick={handleSaveChanges}
                                     variant="contained"
                                     color="primary"
-                                    className="editButton"
                                 >
-                                    save
+                                    Save
                                 </Button>
 
                                 <Button
                                     onClick={handleCloseModal}
                                     variant="contained"
-                                    color="primary"
-                                    className="editButton"
+                                    color="secondary"
                                     style={{ marginLeft: '10px' }}
                                 >
-                                    cancel
+                                    Cancel
                                 </Button>
                             </Box>
                         </div>
@@ -544,9 +578,7 @@ const ManageStock = () => {
                 </div>
             </div>
         </>
-
     );
 }
 
-export default ManageStock;
-
+export default ManageMenu;
