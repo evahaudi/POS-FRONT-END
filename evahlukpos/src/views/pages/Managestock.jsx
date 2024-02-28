@@ -432,8 +432,6 @@ const ManageStock = () => {
                         rows={stockData}
                         columns={columns}
                         checkboxSelection
-                        
-
                     />
                     <Modal
                         open={open}

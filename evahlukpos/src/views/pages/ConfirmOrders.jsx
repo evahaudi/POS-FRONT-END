@@ -176,6 +176,7 @@ const ConfirmOrders = () => {
     };
 
     const columns = [
+        { field: 'id', headerName: 'Id' },
         { field: 'order_number', headerName: 'Order Number', width: 150 },
         { field: 'is_confirmed', headerName: 'Confirmed', width: 130 },
         { field: 'is_completed', headerName: 'Completed', width: 130 },

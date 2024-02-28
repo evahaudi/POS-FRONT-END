@@ -3,7 +3,7 @@ import { Typography, Grid, IconButton, Card, CardContent, CardMedia } from '@mui
 import { LinkedIn, Facebook, Twitter, GitHub } from '@mui/icons-material';
 import { makeStyles } from '@material-ui/core/styles'
 import eve from '../../views/pages/eve.png';
-import manu from '../../views/pages/eve.png';
+import manu from '../../views/pages/manu.png';
 import storyfood from '../../views/pages/storyfood.jpg';
 
 const useStyles = makeStyles((theme) => ({
@@ -11,9 +11,22 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     cardMedia: {
-        height: 'auto',
-        width: '100%',
-        maxWidth: 300,
+         height: 'auto',
+         width: '100%',
+         maxWidth: 300,
+        
+    },
+    name: {
+        textDecoration: 'underline', // Decorate the names
+        fontFamily: 'Verdana',
+        fontSize: '1.2rem', // Set font size
+        fontStyle: 'italic', // Apply italics
+    },
+    content: {
+        textAlign: 'justify', // Align content to justify
+        fontFamily: 'Verdana, Geneva, sans-serif', // Set Verdana as font family
+        fontSize: '1rem', // Set font size
+        lineHeight: '1.5', // Set line height
     },
 }));
 
@@ -30,7 +43,7 @@ const AboutUs = () => {
             padding={2}
         >
             <Grid item xs={12}>
-                <Typography variant="h1" color="orange" align="center" gutterBottom>
+                <Typography variant="h1" className={classes.name} color="orange" align="center" gutterBottom>
                     Welcome to our Evahluk Restaurant POS!
                 </Typography>
                 <Card className={classes.card}>
@@ -50,7 +63,7 @@ const AboutUs = () => {
 
             <Grid item xs={12}>
                 <br />
-                <Typography variant="h1" color="red" align="center" gutterBottom>
+                <Typography variant="h1" color="red" align="center" className={classes.name} gutterBottom>
                     Meet the Team
                 </Typography>
                 <Grid container spacing={2} justifyContent="center">
@@ -64,26 +77,26 @@ const AboutUs = () => {
                                 alt="Emmanuel"
                             />
                             <CardContent>
-                                <Typography color="red" variant="subtitle1">EMMANUEL KUILUK</Typography>
+                                <Typography color="red" className={classes.name} variant="subtitle1">EMMANUEL KUILUK</Typography>
                                 <Typography color="green" variant="body">Software Engineer/data scientist</Typography>
                                 <Grid container spacing={1} justifyContent="center">
                                     <Grid item>
-                                        <IconButton sx={{color:"green"}} aria-label="LinkedIn" href="https://www.linkedin.com/in/everlyne-akinyi-90683a1b5/">
-                                            <LinkedIn />
+                                        <IconButton style={{color:"blue"}}  aria-label="LinkedIn" href="https://www.linkedin.com/in/everlyne-akinyi-90683a1b5/">
+                                            <LinkedIn  />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="blue" aria-label="Facebook" href="https://www.facebook.com/">
+                                        <IconButton style={{color:"blue"}} aria-label="Facebook" href="https://www.facebook.com/">
                                             <Facebook />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="white" aria-label="Twitter" href="https://twitter.com/EvahAudi">
+                                        <IconButton style={{color:"blue"}} aria-label="Twitter" href="https://twitter.com/EvahAudi">
                                             <Twitter />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="white" aria-label="GitHub" href="https://github.com/evahaudi">
+                                        <IconButton style={{color:"blue"}} aria-label="GitHub" href="https://github.com/evahaudi">
                                             <GitHub />
                                         </IconButton>
                                     </Grid>
@@ -101,26 +114,26 @@ const AboutUs = () => {
                                 alt="Eng. eve"
                             />
                             <CardContent>
-                                <Typography color="red" variant="subtitle1">EVERLYNE AKINYI AUDI</Typography>
+                                <Typography color="red" className={classes.name} variant="subtitle1">EVERLYNE AKINYI AUDI</Typography>
                                 <Typography color="green" variant="body2">Software Engineer/Enterprenuer</Typography>
                                 <Grid container spacing={1} justifyContent="center">
                                     <Grid item>
-                                        <IconButton color="white" aria-label="LinkedIn" href="https://www.linkedin.com/in/everlyne-akinyi-90683a1b5/">
+                                        <IconButton style={{color:"blue"}} aria-label="LinkedIn" href="https://www.linkedin.com/in/everlyne-akinyi-90683a1b5/">
                                             <LinkedIn />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="white" aria-label="Facebook" href="https://www.facebook.com/">
+                                        <IconButton style={{color:"blue"}} aria-label="Facebook" href="https://www.facebook.com/">
                                             <Facebook />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="white" aria-label="Twitter" href="https://twitter.com/EvahAudi">
+                                        <IconButton style={{color:"blue"}} aria-label="Twitter" href="https://twitter.com/EvahAudi">
                                             <Twitter />
                                         </IconButton>
                                     </Grid>
                                     <Grid item>
-                                        <IconButton color="white" aria-label="GitHub" href="https://github.com/evahaudi">
+                                        <IconButton style={{color:"blue"}} aria-label="GitHub" href="https://github.com/evahaudi">
                                             <GitHub />
                                         </IconButton>
                                     </Grid>
