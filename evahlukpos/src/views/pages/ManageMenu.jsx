@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         marginBottom: theme.spacing(2),
-        maxWidth: 345,
+        
     },
     image: {
         width: theme.spacing(20),
