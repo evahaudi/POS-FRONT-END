@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     modalContainer: {
         position: 'absolute',
         width: '80%',
-        maxWidth: 400,
+        maxWidth: 500,
         backgroundColor: theme.palette.background.paper,
         borderRadius: '2px',
         boxShadow: theme.shadows[5],
@@ -120,7 +120,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ManageStaff = () => {
     const theme = useTheme();
-    // const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
     const [staffData, setStaffData] = useState([]);
     const [selectedRows, setSelectedRows] = useState(null);
@@ -137,6 +137,7 @@ const ManageStaff = () => {
         password2: '',
         role: '',
         user_image: '',
+        gender:'',
         is_active: false,
     });
     const [newStaff, setNewStaff] = useState({
@@ -144,6 +145,7 @@ const ManageStaff = () => {
         email: '',
         fullname: '',
         birthdate: '',
+        gender:"",
         location: '',
         experienceyears: '',
         phone: '',
@@ -172,6 +174,9 @@ const ManageStaff = () => {
     };
 
     const handleCreateStaff = () => {
+        const { username, gender, email, is_active, fullname, birthdate, location, experienceyears, phone, department, password, password2, role, user_image } = newStaff;
+
+        console.log("submitted data:", newStaff)
         const token = localStorage.getItem('token');
 
         if (!token) {
@@ -183,9 +188,10 @@ const ManageStaff = () => {
             headers: {
                 Authorization: `Token ${token}`,
             },
-        };
+        }
 
-        axios.post('http://127.0.0.1:8000/api/waiters/create', newStaff, config)
+        const url = `http://127.0.0.1:8000/api/waiters/create/?username=${username}&email=${email}&gender=${gender}&fullname=${fullname}&birthdate=${birthdate}&location=${location}&experienceyears=${experienceyears}&phone=${phone}&department=${department}&password=${password}&password2=${password2}&role=${role}&user_image=${user_image}&is_active=${is_active}`
+        axios.post(url, {}, config)
             .then(response => {
                 console.log('Staff created successfully:', response.data);
                 fetchStaffData();
@@ -195,6 +201,7 @@ const ManageStaff = () => {
                     email: '',
                     fullname: '',
                     birthdate: '',
+                    gender:'',
                     location: '',
                     experienceyears: '',
                     phone: '',
@@ -233,7 +240,7 @@ const ManageStaff = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/waiters/delete/${id}`)
+                axios.delete(`http://127.0.0.1:8000/api/waiters/delete/?id=${id}`)
                     .then(response => {
                         console.log('Staff member deleted successfully:', response.data);
                         fetchStaffData();
@@ -258,7 +265,27 @@ const ManageStaff = () => {
             return;
         }
 
-        const updatePromise = axios.put(`http://127.0.0.1:8000/api/waiters/update/${selectedRows.id}`, modalStaff);
+        // Merge selectedRows and modalStock objects
+        const updatedFields = { ...selectedRows, ...modalStaff };
+
+        // Remove the 'id' field from the merged object
+        delete updatedFields.id;
+        delete updatedFields.user;
+        delete updatedFields.created_by;
+        delete updatedFields.created_at;
+
+        // Extract field names and values from the updatedFields object
+        const fieldNames = Object.keys(updatedFields);
+        const fieldValues = Object.values(updatedFields);
+
+        // Construct updatedFields object with field_name and field_value properties
+        const updatedFieldsObj = {
+            field_name: fieldNames,
+            field_value: fieldValues,
+        };
+
+        console.log('Updated Fields:', updatedFieldsObj);
+        const updatePromise = axios.put(`http://127.0.0.1:8000/api/waiters/update/?id=${selectedRows.id}`, updatedFieldsObj);
 
         updatePromise.then(response => {
             console.log('Staff member updated successfully:', response.data);
@@ -285,14 +312,17 @@ const ManageStaff = () => {
         { field: 'id', headerName: 'Id' },
         { field: 'username', headerName: 'Username' },
         { field: 'email', headerName: 'Email' },
-        { field: 'fullname', headerName: 'Full Name' },
+        { field: 'fullname', headerName: 'Name' },
         { field: 'birthdate', headerName: 'Birthdate' },
         { field: 'location', headerName: 'Location' },
-        { field: 'experienceyears', headerName: 'Experience (Years)' },
+        { field: 'experienceyears', headerName: 'Expnce yrs' },
         { field: 'phone', headerName: 'Phone' },
-        { field: 'department', headerName: 'Department' },
+        { field: 'department', headerName: 'Deprtmnt' },
         { field: 'role', headerName: 'Role' },
         { field: 'is_active', headerName: 'Active', type: 'boolean' },
+        { field: 'user_image', headerName: 'image' },
+        { field: 'password', headerName: 'pwd' },
+
         {
             field: 'edit',
             headerName: 'Edit',
@@ -336,6 +366,9 @@ const ManageStaff = () => {
             department: row.department,
             role: row.role,
             is_active: row.is_active,
+            user_image: row.user_image,
+            password: row.password
+
         });
         setOpen(true);
     };
@@ -378,16 +411,20 @@ const ManageStaff = () => {
                                     value={newStaff.username}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <Typography variant="subtitle1" color="textPrimary">Email</Typography>
                                 <TextField
-                                    type="text"
+                                    type="email"
                                     name="email"
                                     value={newStaff.email}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -398,6 +435,8 @@ const ManageStaff = () => {
                                     value={newStaff.fullname}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -408,6 +447,8 @@ const ManageStaff = () => {
                                     value={newStaff.birthdate}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -418,6 +459,8 @@ const ManageStaff = () => {
                                     value={newStaff.location}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -428,6 +471,8 @@ const ManageStaff = () => {
                                     value={newStaff.experienceyears}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -438,6 +483,8 @@ const ManageStaff = () => {
                                     value={newStaff.phone}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -448,6 +495,8 @@ const ManageStaff = () => {
                                     value={newStaff.department}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -458,6 +507,8 @@ const ManageStaff = () => {
                                     value={newStaff.role}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
@@ -468,7 +519,64 @@ const ManageStaff = () => {
                                     value={newStaff.is_active}
                                     onChange={handleInputChange}
                                     variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
                                 />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Password</Typography>
+                                <TextField
+                                    type="password"
+                                    name="password"
+                                    value={newStaff.password}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Profile Image</Typography>
+                                <TextField
+                                    type="file"
+                                    accept="image/*"
+                                    name="user_image"
+                                    value={newStaff.user_image}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Typography variant="subtitle1" color="textPrimary">Confirm Password</Typography>
+                                <TextField
+                                    type="password"
+                                    name="password2"
+                                    value={newStaff.password2}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                    InputLabelProps={{ style: { color: 'black' } }}
+                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    id="gender"
+                                    select
+                                    name="gender"
+                                    value={newStaff.gender}
+                                    onChange={handleInputChange}
+                                    variant="outlined"
+                                    SelectProps={{
+                                        native: true,
+                                    }}
+                                >
+                                    <option value=""></option>
+                                    <option value="female">Female</option>
+                                    <option value="male">Male</option>
+
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <Button
@@ -477,13 +585,16 @@ const ManageStaff = () => {
                                     color="primary"
                                     onClick={handleCreateStaff}
                                 >
-                                    Create Staff
+                                    Create
                                 </Button>
                             </Grid>
                         </Grid>
                     </CardContent>
                 </Card>
-                <div style={{ height: 400, width: '100%' }}>
+            </div>
+            <br />
+            <div className={classes.container}>
+                <div className={classes.dataGrid}>
                     <DataGrid
                         className={classes.dataGrid}
                         rows={staffData}
@@ -492,130 +603,208 @@ const ManageStaff = () => {
                         checkboxSelection
                         disableSelectionOnClick
                     />
-                </div>
-            </div>
-            <Modal
-                open={open}
-                onClose={handleCloseModal}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-            >
-                <div className={classes.modalContainer}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Username</Typography>
-                            <TextField
-                                type="text"
-                                name="username"
-                                value={modalStaff.username}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Email</Typography>
-                            <TextField
-                                type="text"
-                                name="email"
-                                value={modalStaff.email}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Full Name</Typography>
-                            <TextField
-                                type="text"
-                                name="fullname"
-                                value={modalStaff.fullname}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Birthdate</Typography>
-                            <TextField
-                                type="date"
-                                name="birthdate"
-                                value={modalStaff.birthdate}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Location</Typography>
-                            <TextField
-                                type="text"
-                                name="location"
-                                value={modalStaff.location}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Experience (Years)</Typography>
-                            <TextField
-                                type="text"
-                                name="experienceyears"
-                                value={modalStaff.experienceyears}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Phone</Typography>
-                            <TextField
-                                type="text"
-                                name="phone"
-                                value={modalStaff.phone}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Department</Typography>
-                            <TextField
-                                type="text"
-                                name="department"
-                                value={modalStaff.department}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Role</Typography>
-                            <TextField
-                                type="text"
-                                name="role"
-                                value={modalStaff.role}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Typography variant="subtitle1" color="textPrimary">Is Active</Typography>
-                            <TextField
-                                type="text"
-                                name="is_active"
-                                value={modalStaff.is_active}
-                                onChange={handleModalInputChange}
-                                variant="outlined"
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <Button
-                                className="editButton"
-                                variant="contained"
-                                color="primary"
-                                onClick={handleSaveChanges}
+
+
+                    <Modal
+                        open={open}
+                        onClose={handleCloseModal}
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                    >
+                        <div className={classes.modalContainer}>
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: 500,
+                                    bgcolor: 'background.paper',
+                                    border: '2px solid #000',
+                                    boxShadow: 24,
+                                    p: 4,
+                                }}
                             >
-                                Save Changes
-                            </Button>
-                        </Grid>
-                    </Grid>
-                </div>
-            </Modal>
+                                <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>Update Staff Details</Typography>
+                                {selectedRows && (
+                                    <>
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Username</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="username"
+                                                    value={modalStaff.username}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Email</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="email"
+                                                    value={modalStaff.email}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Profile Image</Typography>
+                                                <TextField
+                                                    type="image"                  
+                                                    name="user_image"
+                                                    accept="image/*"
+                                                    value={modalStaff.user_image}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                    InputLabelProps={{ style: { color: 'black' } }}
+                                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Full Name</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="fullname"
+                                                    value={modalStaff.fullname}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Birthdate</Typography>
+                                                <TextField
+                                                    type="date"
+                                                    name="birthdate"
+                                                    value={modalStaff.birthdate}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Location</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="location"
+                                                    value={modalStaff.location}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Experience (Years)</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="experienceyears"
+                                                    value={modalStaff.experienceyears}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Phone</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="phone"
+                                                    value={modalStaff.phone}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Department</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="department"
+                                                    value={modalStaff.department}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Role</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="role"
+                                                    value={modalStaff.role}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Is Active</Typography>
+                                                <TextField
+                                                    type="text"
+                                                    name="is_active"
+                                                    value={modalStaff.is_active}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    id="gender"
+                                                    select
+                                                    name="gender"
+                                                    label="gender"
+                                                    value={modalStaff.gender}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                    SelectProps={{
+                                                        native: true,
+                                                    }}
+                                                >
+                                                    <option value=""></option>
+                                                    <option value="female">Female</option>
+                                                    <option value="male">Male</option>
+
+                                                </TextField>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <Typography variant="subtitle1" color="textPrimary">Password</Typography>
+                                                <TextField
+                                                    type="password"
+                                                    name="passsword"
+                                                    value={modalStaff.password}
+                                                    onChange={handleModalInputChange}
+                                                    variant="outlined"
+                                                    InputLabelProps={{ style: { color: 'black' } }}
+                                                    inputProps={{ style: { fontSize: isSmallScreen ? '12px' : '16px' } }}
+                                                />
+                                            </Grid>
+                                        </Grid>
+                                    </>
+                                )}
+                                <br />
+
+                                <Button
+                                    className="editButton"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleSaveChanges}
+                                >
+                                    Save
+                                </Button>
+                                <Button
+                                    className="editButton"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={handleCloseModal}
+                                    style={{ marginLeft: '10px' }}
+                                >
+                                    cancel
+                                </Button>
+                            </Box>
+                        </div>
+                    </Modal>
+                </div >
+
+            </div>
         </>
+
+
+
     );
 };
 
