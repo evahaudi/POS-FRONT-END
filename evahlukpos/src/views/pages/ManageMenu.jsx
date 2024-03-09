@@ -20,6 +20,14 @@ const useStyles = makeStyles((theme) => ({
             minHeight: '200px', // Adjust minimum height for smaller screens
         },
     },
+    image: {
+        width: theme.spacing(20),
+        height: theme.spacing(20),
+        [theme.breakpoints.down('md')]: {
+            width: theme.spacing(15),
+            height: theme.spacing(15),
+        },
+    },
     modalContainer: {
         position: 'absolute',
         width: '80%',
@@ -363,7 +371,8 @@ const ManageMenu = () => {
             [name]: value,
         }));
     };
-
+    
+    const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${menu.image}`
     return (
         <>
             <div className={classes.container}>
@@ -451,7 +460,7 @@ const ManageMenu = () => {
                 </Card>
             </div>
 
-             <div className={classes.container}>
+             {/* <div className={classes.container}> */}
                 {/* <div className={classes.dataGrid}> */}
                     {/* <DataGrid
                         rows={menuData}
@@ -465,6 +474,9 @@ const ManageMenu = () => {
                         <Typography variant="body1">Description: {menu.description}</Typography>
                         <Typography variant="body1">Category: {menu.category}</Typography>
                         <Typography variant="body1">Price: {menu.price}</Typography>
+                        <img src={imageUrl} alt="menu" className={classes.image}/>
+                        <Typography variant="body1">Vegetarian: {menu.category}</Typography>
+                        <Typography variant="body1">Available: {menu.price}</Typography>
                         <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
                         <Button variant="contained" color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
                     </CardContent>
@@ -587,7 +599,7 @@ const ManageMenu = () => {
                     </Box>
                 </div>
             </Modal>
-        </div >
+        {/* </div > */}
             {/* </div > */}
         </>
     );
