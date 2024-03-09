@@ -357,7 +357,7 @@ const ManageMenu = () => {
             </div>
             <br />
             {menuData.map(menu => (
-                <Grid container spacing={2} justifyContent="center" direction={isSmallScreen ? "column" : "row"}>
+                <Grid container spacing={2} justifyContent="center" alignItems="center" direction={isSmallScreen ? "column" : "row"}>
                        <Grid item xs={12} sm={4}>
                         <Card key={menu.id} className={classes.card} >
                             <CardContent>
@@ -376,10 +376,10 @@ const ManageMenu = () => {
                                 <Typography variant="body1">{menu.category}</Typography>
                                 <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Price:</Typography>
                                 <Typography variant="body1">Ksh.{menu.price}</Typography>
-                                <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Vegetarian:</Typography>
+                                {/* <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Vegetarian:</Typography>
                                 <Typography variant="body1">{menu.is_vegetarian}</Typography>
                                 <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Available:</Typography>
-                               <Typography variant="body1">{menu.is_available}</Typography>
+                               <Typography variant="body1">{menu.is_available}</Typography> */}
                                 <CardActionArea>
                                     <CardActions>
                                         <Button variant="contained" color="primary" onClick={() => handleEdit(menu.id)}>Edit</Button>
