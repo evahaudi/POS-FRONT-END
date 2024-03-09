@@ -56,7 +56,6 @@ const ManageMenu = () => {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const classes = useStyles();
     const [menuData, setMenuData] = useState([]);
-    const [selectedRows, setSelectedRows] = useState(null);
     const [modalMenu, setModalMenu] = useState({
         menuitem_name: '',
         is_vegetarian: false,
@@ -139,12 +138,12 @@ const ManageMenu = () => {
             });
     };
 
-    const handleDelete = (row) => {
-        setSelectedRows(row);
-        console.log('Row data:', row); // Check the contents of the row object
-        const id = row.id;
-
-        if (!selectedRows) {
+    const handleDelete = (cardId) => {
+        
+        const id = cardId;
+        console.log('Card ID:', cardId);
+       
+        if (!cardId) {
             Swal.fire('Warning', 'Please select an item to delete', 'warning');
             return;
         }
@@ -160,12 +159,12 @@ const ManageMenu = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`https://evahluk-restful-apis.onrender.com/api/menu/delete/${id}`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/menu/delete/?id=${id}`)
                     .then(response => {
                         console.log('Menu item deleted successfully:', response.data);
                         fetchMenuData();
                         Swal.fire('Deleted!', 'Your menu item has been deleted.', 'success');
-                        setSelectedRows(null); // Deselect the item after deletion
+                        
                     })
                     .catch(error => {
                         console.error('Error deleting menu item:', error);
@@ -175,23 +174,26 @@ const ManageMenu = () => {
         });
     };
 
-    const handleSaveChanges = () => {
-        if (!selectedRows) {
+    const handleSaveChanges = (cardId) => {
+        
+       
+        if (!cardId) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Please select a row to update.',
+                text: 'Please select a menu to update.',
             });
             return;
         }
 
         // Merge selectedRows and modalMenu objects
-        const updatedFields = { ...selectedRows, ...modalMenu };
+        const updatedFields = {  ...modalMenu };
 
         // Remove the 'id' field from the merged object
         delete updatedFields.id;
 
-        const id = selectedRows.id;
+        const id = cardId;
+        console.log('Card ID:', cardId);
         const token = localStorage.getItem('token');
 
         if (!token) {
@@ -205,7 +207,7 @@ const ManageMenu = () => {
             },
         };
 
-        axios.put(`https://evahluk-restful-apis.onrender.com/api/menu/update/${id}`, updatedFields, config)
+        axios.put(`https://evahluk-restful-apis.onrender.com/api/menu/update//id=${id}`, updatedFields, config)
             .then(response => {
                 console.log('Menu item updated successfully:', response.data);
                 fetchMenuData(); // Refresh data
@@ -216,7 +218,7 @@ const ManageMenu = () => {
                 });
 
                 setOpen(false);
-                setSelectedRows(null);
+                
             })
             .catch(error => {
                 console.error('Error updating menu item:', error);
@@ -229,19 +231,22 @@ const ManageMenu = () => {
     };
 
  
-    const handleEdit = (row) => {
-        setSelectedRows(row);
-        setModalMenu({
-            menuitem_name: row.menuitem_name,
-            is_vegetarian: row.is_vegetarian,
-            description: row.description,
-            is_available: row.is_available,
-            image: row.image,
-            category: row.category,
-            price: row.price,
-        });
-        setOpen(true);
+    const handleEdit = (cardId) => {
+        const selectedCard = menuData.find(menu => menu.id === cardId);
+        if (selectedCard) {
+            setModalMenu({
+                menuitem_name: selectedCard.menuitem_name,
+                is_vegetarian: selectedCard.is_vegetarian,
+                description: selectedCard.description,
+                is_available: selectedCard.is_available,
+                image: selectedCard.image,
+                category: selectedCard.category,
+                price: selectedCard.price,
+            });
+            setOpen(true);
+        }
     };
+    
 
     const handleCloseModal = () => {
         setOpen(false);
@@ -377,7 +382,7 @@ const ManageMenu = () => {
                                <Typography variant="body1">{menu.is_available}</Typography>
                                 <CardActionArea>
                                     <CardActions>
-                                        <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
+                                        <Button variant="contained" color="primary" onClick={() => handleEdit(menu.id)}>Edit</Button>
                                         <br />
                                         <Button variant="contained" style={{ marginLeft: '10px' }} color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
                                     </CardActions>
@@ -410,7 +415,7 @@ const ManageMenu = () => {
                         }}
                     >
                         <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>Edit Menu Item</Typography>
-                        {selectedRows && (
+                        
                             <>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
@@ -485,10 +490,10 @@ const ManageMenu = () => {
                                     </Grid>
                                 </Grid>
                             </>
-                        )}
+                        
                         <br />
                         <Button
-                            onClick={handleSaveChanges}
+                            onClick={() => handleSaveChanges(modalMenu.id)}
                             variant="contained"
                             color="primary"
                         >
