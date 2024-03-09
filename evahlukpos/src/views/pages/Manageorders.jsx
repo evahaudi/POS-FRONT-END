@@ -508,6 +508,9 @@ const ManageOrders = () => {
                     </CardContent>
                 </Card>
 
+                </div>
+                <div className={classes.container}>
+
                 <Box mt={2}>
                     <div style={{ height: 500, width: '100%' }}>
                         <DataGrid
