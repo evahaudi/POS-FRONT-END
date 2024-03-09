@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         backgroundColor: "white",
         minHeight: '300px',
-        padding: theme.spacing(2, 4, 3),
         padding: theme.spacing(2),
         [theme.breakpoints.down('sm')]: {
             padding: theme.spacing(1),

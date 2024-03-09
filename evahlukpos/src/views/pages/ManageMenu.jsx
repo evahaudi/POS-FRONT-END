@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { Card, Grid, CardContent, Typography, TextField, Button, Box, Modal, useTheme } from '@material-ui/core'
+import { Card, Grid,CardContent,CardActions,CardActionArea,CardMedia,CardHeader, Typography, TextField, Button, Box, Modal, useTheme } from '@material-ui/core'
 import Swal from 'sweetalert2';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -19,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             minHeight: '200px', // Adjust minimum height for smaller screens
         },
+    },
+    card: {
+        marginBottom: theme.spacing(2),
     },
     image: {
         width: theme.spacing(20),
@@ -374,7 +378,7 @@ const ManageMenu = () => {
         }));
     };
     
-    const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${menu.image}`
+    const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${menuData.image}`
     return (
         <>
             <div className={classes.container}>
@@ -463,18 +467,24 @@ const ManageMenu = () => {
             </div>
             <br/>
             {menuData.map(menu => (
-                <Card key={menu.id} className={classes.card} item xs={12} sm={6}>
+                <Card key={menu.id} className={classes.card} >
                     <CardContent>
+                        <CardHeader>
                         <Typography variant="h6">{menu.menuitem_name}</Typography>
-                        <Typography variant="body1">Description: {menu.description}</Typography>
+                        </CardHeader>
+                        <Typography variant="body1" color='green' fontFamily='Verdana' fontStyle='italic' >Description: {menu.description}</Typography>
                         <Typography variant="body1">Category: {menu.category}</Typography>
                         <Typography variant="body1">Price: {menu.price}</Typography>
-                        <img src={imageUrl} alt="menu" className={classes.image}/>
                         <Typography variant="body1">Vegetarian: {menu.category}</Typography>
                         <Typography variant="body1">Available: {menu.price}</Typography>
+                        <CardMedia><img src={imageUrl} alt="menu" className={classes.image}/></CardMedia>
+                        <CardActionArea>
+                         <CardActions>
                         <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
                         <br/>
                         <Button variant="contained" style={{ marginLeft: '10px' }} color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
+                        </CardActions>
+                        </CardActionArea>
                     </CardContent>
                 </Card>
                 
