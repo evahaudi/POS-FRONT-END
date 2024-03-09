@@ -481,7 +481,9 @@ const ManageMenu = () => {
                         <Button variant="contained" style={{ marginLeft: '10px' }} color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
                     </CardContent>
                 </Card>
+                
             ))}
+            <br/>
             <Modal
                 open={open}
                 onClose={handleCloseModal}
