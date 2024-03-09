@@ -353,11 +353,11 @@ const ManageMenu = () => {
             <br />
             {menuData.map(menu => (
                 <Grid container spacing={2} justifyContent="center">
-                    <Grid item xs={12} sm={6} md={4}>
+                    
                         <Card key={menu.id} className={classes.card} >
                             <CardContent>
                                 
-                                <Typography variant="h2" color='black'>{menu.menuitem_name}</Typography>
+                                <Typography variant="h2" color='red' fontFamily='Verdana'>{menu.menuitem_name}</Typography>
                                 <CardMedia
                                     component="img"
                                     height="194"
@@ -385,7 +385,6 @@ const ManageMenu = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                </Grid>
 
             ))}
             <br />
