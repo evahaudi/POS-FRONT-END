@@ -468,13 +468,18 @@ const ManageMenu = () => {
                                         src={modalMenu.image}
                                         alt="menu"
                                     />
-                                    {/* <TextField
-                                            type="text"
-                                            name="image"
-                                            value={modalMenu.image}
-                                            onChange={handleModalInputChange}
-                                            variant="outlined"
-                                        /> */}
+                                    <TextField
+                                        
+                                        name="image"
+                                        value={modalMenu.image}
+                                        onChange={handleModalInputChange}
+                                        variant="outlined"
+                                        accept="image/*"
+                                        style={{ display: 'none' }}
+                                        id="upload-image"
+                                        type="file"
+                                        
+                                    />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <Typography variant="subtitle1" color="textPrimary">Category</Typography>
