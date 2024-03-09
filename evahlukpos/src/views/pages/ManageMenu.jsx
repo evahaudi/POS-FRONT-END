@@ -478,6 +478,7 @@ const ManageMenu = () => {
                         <Typography variant="body1">Vegetarian: {menu.category}</Typography>
                         <Typography variant="body1">Available: {menu.price}</Typography>
                         <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
+                        <br/>
                         <Button variant="contained" style={{ marginLeft: '10px' }} color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
                     </CardContent>
                 </Card>
