@@ -167,6 +167,8 @@ const ManageOrders = () => {
             });
     };
 
+    console.log("order data response:" ,orderData)
+
     const handleCreateOrder = () => {
         const { items, customer_name, table_number, quantity, duration, delivery_time, payment_status, total_amount } = newOrder;
         const config = {
