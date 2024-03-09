@@ -378,7 +378,7 @@ const ManageMenu = () => {
         }));
     };
 
-    const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${menuData.image}`
+    
     return (
         <>
             <div className={classes.container}>
@@ -479,7 +479,13 @@ const ManageMenu = () => {
                                 <Typography variant="body1">Price: {menu.price}</Typography>
                                 <Typography variant="body1">Vegetarian: {menu.category}</Typography>
                                 <Typography variant="body1">Available: {menu.price}</Typography>
-                                <CardMedia><img src={imageUrl} alt="menu" className={classes.image} /></CardMedia>
+                                <CardMedia
+                                    component="img"
+                                    height="194"
+                                    className={classes.image}
+                                    src={menu.image}
+                                    alt="menu"
+                                />
                                 <CardActionArea>
                                     <CardActions>
                                         <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
@@ -611,7 +617,7 @@ const ManageMenu = () => {
                     </Box>
                 </div>
             </Modal>
-          
+
         </>
     );
 }
