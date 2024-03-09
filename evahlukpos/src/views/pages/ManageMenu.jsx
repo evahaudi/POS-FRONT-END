@@ -228,43 +228,7 @@ const ManageMenu = () => {
             });
     };
 
-    const columns = [
-        { field: 'id', headerName: 'Id' },
-        { field: 'menuitem_name', headerName: 'Name' },
-        { field: 'is_vegetarian', headerName: 'Vegetarian', type: 'boolean' },
-        { field: 'description', headerName: 'Description' },
-        { field: 'is_available', headerName: 'Available', type: 'boolean' },
-        { field: 'image', headerName: 'Image' },
-        { field: 'category', headerName: 'Category' },
-        { field: 'price', headerName: 'Price' },
-        {
-            field: 'edit',
-            headerName: 'Edit',
-            renderCell: (params) => (
-                <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => handleEdit(params.row)}
-                >
-                    Edit
-                </Button>
-            ),
-        },
-        {
-            field: 'delete',
-            headerName: 'Delete',
-            renderCell: (params) => (
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => handleDelete(params.row)}
-                >
-                    Delete
-                </Button>
-            ),
-        },
-    ];
-
+ 
     const handleEdit = (row) => {
         setSelectedRows(row);
         setModalMenu({
