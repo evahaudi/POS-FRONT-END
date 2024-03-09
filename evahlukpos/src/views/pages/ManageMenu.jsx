@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { Card, Grid, CardContent, Typography, TextField, Button, Box, Modal, useTheme} from '@material-ui/core'
+import { Card, Grid, CardContent, Typography, TextField, Button, Box, Modal, useTheme } from '@material-ui/core'
 import Swal from 'sweetalert2';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -55,19 +55,19 @@ const useStyles = makeStyles((theme) => ({
                 fontSize: 9,
                 color: 'white',
                 backgroundColor: 'black',
-                minWidth: '500px', 
+                minWidth: '500px',
                 maxHeight: '50px',
                 whiteSpace: 'normal',
                 overflow: 'visible',
             },
         },
         "& .MuiDataGrid-Pagination-selectionLabel": {
-            fontSize:20,
+            fontSize: 20,
             [theme.breakpoints.down('sm')]: {
                 fontSize: 5,
             },
         },
-        '& .MuiDataGrid-row:nth-child(even)':{
+        '& .MuiDataGrid-row:nth-child(even)': {
             backgroundColor: 'grey'
         },
         '& .MuiDataGrid-cell': {
@@ -451,132 +451,144 @@ const ManageMenu = () => {
                 </Card>
             </div>
 
-            <div className={classes.container}>
-                <div className={classes.dataGrid}>
-                    <DataGrid
+             <div className={classes.container}>
+                {/* <div className={classes.dataGrid}> */}
+                    {/* <DataGrid
                         rows={menuData}
                         columns={columns}
                         checkboxSelection
-                    />
-                    <Modal
-                        open={open}
-                        onClose={handleCloseModal}
-                        aria-labelledby="modal-title"
-                        aria-describedby="modal-description"
+                    />  */}
+            {menuData.map(menu => (
+                <Card key={menu.id} className={classes.card}>
+                    <CardContent>
+                        <Typography variant="h6">{menu.menuitem_name}</Typography>
+                        <Typography variant="body1">Description: {menu.description}</Typography>
+                        <Typography variant="body1">Category: {menu.category}</Typography>
+                        <Typography variant="body1">Price: {menu.price}</Typography>
+                        <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
+                        <Button variant="contained" color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
+                    </CardContent>
+                </Card>
+            ))}
+            <Modal
+                open={open}
+                onClose={handleCloseModal}
+                aria-labelledby="modal-title"
+                aria-describedby="modal-description"
+            >
+                <div className={classes.modalContainer}>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%, -50%)',
+                            width: 400,
+                            bgcolor: 'background.paper',
+                            border: '2px solid #000',
+                            boxShadow: 24,
+                            p: 4,
+                        }}
                     >
-                        <div className={classes.modalContainer}>
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    width: 400,
-                                    bgcolor: 'background.paper',
-                                    border: '2px solid #000',
-                                    boxShadow: 24,
-                                    p: 4,
-                                }}
-                            >
-                                <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>Edit Menu Item</Typography>
-                                {selectedRows && (
-                                    <>
-                                        <Grid container spacing={2}>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Name</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="menuitem_name"
-                                                    value={modalMenu.menuitem_name}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Is Vegetarian</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="is_vegetarian"
-                                                    value={modalMenu.is_vegetarian}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Description</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="description"
-                                                    value={modalMenu.description}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Is Available</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="is_available"
-                                                    value={modalMenu.is_available}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Image</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="image"
-                                                    value={modalMenu.image}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Category</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="category"
-                                                    value={modalMenu.category}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} sm={6}>
-                                                <Typography variant="subtitle1" color="textPrimary">Price</Typography>
-                                                <TextField
-                                                    type="text"
-                                                    name="price"
-                                                    value={modalMenu.price}
-                                                    onChange={handleModalInputChange}
-                                                    variant="outlined"
-                                                />
-                                            </Grid>
-                                        </Grid>
-                                    </>
-                                )}
-                                <br />
-                                <Button
-                                    onClick={handleSaveChanges}
-                                    variant="contained"
-                                    color="primary"
-                                >
-                                    Save
-                                </Button>
+                        <Typography variant="h5" align="center" style={{ color: 'green' }} gutterBottom>Edit Menu Item</Typography>
+                        {selectedRows && (
+                            <>
+                                <Grid container spacing={2}>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Name</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="menuitem_name"
+                                            value={modalMenu.menuitem_name}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Is Vegetarian</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="is_vegetarian"
+                                            value={modalMenu.is_vegetarian}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Description</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="description"
+                                            value={modalMenu.description}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Is Available</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="is_available"
+                                            value={modalMenu.is_available}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Image</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="image"
+                                            value={modalMenu.image}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Category</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="category"
+                                            value={modalMenu.category}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <Typography variant="subtitle1" color="textPrimary">Price</Typography>
+                                        <TextField
+                                            type="text"
+                                            name="price"
+                                            value={modalMenu.price}
+                                            onChange={handleModalInputChange}
+                                            variant="outlined"
+                                        />
+                                    </Grid>
+                                </Grid>
+                            </>
+                        )}
+                        <br />
+                        <Button
+                            onClick={handleSaveChanges}
+                            variant="contained"
+                            color="primary"
+                        >
+                            Save
+                        </Button>
 
-                                <Button
-                                    onClick={handleCloseModal}
-                                    variant="contained"
-                                    color="secondary"
-                                    style={{ marginLeft: '10px' }}
-                                >
-                                    Cancel
-                                </Button>
-                            </Box>
-                        </div>
-                    </Modal>
+                        <Button
+                            onClick={handleCloseModal}
+                            variant="contained"
+                            color="secondary"
+                            style={{ marginLeft: '10px' }}
+                        >
+                            Cancel
+                        </Button>
+                    </Box>
                 </div>
-            </div>
+            </Modal>
+        </div >
+            {/* </div > */}
         </>
     );
 }
