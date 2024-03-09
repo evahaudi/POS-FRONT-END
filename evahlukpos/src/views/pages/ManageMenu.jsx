@@ -357,7 +357,7 @@ const ManageMenu = () => {
             </div>
             <br />
             {menuData.map(menu => (
-                <Grid container spacing={2} justifyContent="center">
+                <Grid container spacing={2} justifyContent="center" direction={isSmallScreen ? "column" : "row"}>
                        <Grid item xs={12} sm={4}>
                         <Card key={menu.id} className={classes.card} >
                             <CardContent>
