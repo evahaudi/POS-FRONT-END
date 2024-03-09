@@ -95,6 +95,7 @@ const ManagerSidebar = () => {
                     const response = await axios.get(
                         `https://evahluk-restful-apis.onrender.com/api/getuserbyusername/?username=${storedUsername}`
                     )
+                    console.log("Responces:",response.data)
                     setUserDetails(response.data)
                 }
             } catch (error) {
