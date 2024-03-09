@@ -165,6 +165,8 @@ const ManageMenu = () => {
                 console.error('Error fetching menu data:', error);
             });
     };
+    console.log("menus:", menuData)
+
 
     const handleCreateMenu = () => {
         const { menuitem_name, is_vegetarian, description, is_available, image, category, price } = newMenu;
@@ -459,16 +461,9 @@ const ManageMenu = () => {
                     </CardContent>
                 </Card>
             </div>
-
-             {/* <div className={classes.container}> */}
-                {/* <div className={classes.dataGrid}> */}
-                    {/* <DataGrid
-                        rows={menuData}
-                        columns={columns}
-                        checkboxSelection
-                    />  */}
+            <br/>
             {menuData.map(menu => (
-                <Card key={menu.id} className={classes.card}>
+                <Card key={menu.id} className={classes.card} item xs={12} sm={6}>
                     <CardContent>
                         <Typography variant="h6">{menu.menuitem_name}</Typography>
                         <Typography variant="body1">Description: {menu.description}</Typography>
