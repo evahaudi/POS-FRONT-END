@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         marginBottom: theme.spacing(2),
+        maxWidth: 345,
     },
     image: {
         width: theme.spacing(20),
@@ -47,87 +48,7 @@ const useStyles = makeStyles((theme) => ({
             width: '90%',
         },
     },
-    dataGrid: {
-        width: '100%',
-        '& .MuiDataGrid-root': {
-            fontSize: 30,
-            [theme.breakpoints.down('sm')]: {
-                fontSize: 8,
-                minWidth: '350px'
-            },
-        },
-        '& .MuiDataGrid-columnHeaders': {
-            fontSize: 18,
-            color: 'white',
-            backgroundColor: 'black',
-            whiteSpace: 'normal',
-            minWidth: '150px',
-            maxHeight: '50px',
-            [theme.breakpoints.down('sm')]: {
-                fontSize: 9,
-                color: 'white',
-                backgroundColor: 'black',
-                minWidth: '500px',
-                maxHeight: '50px',
-                whiteSpace: 'normal',
-                overflow: 'visible',
-            },
-        },
-        "& .MuiDataGrid-Pagination-selectionLabel": {
-            fontSize: 20,
-            [theme.breakpoints.down('sm')]: {
-                fontSize: 5,
-            },
-        },
-        '& .MuiDataGrid-row:nth-child(even)': {
-            backgroundColor: 'grey'
-        },
-        '& .MuiDataGrid-cell': {
-            fontSize: 12,
-            whiteSpace: 'unset',
-            width: 200,
-            [theme.breakpoints.down('sm')]: {
-                fontSize: 12,
-                paddingLeft: 4,
-                paddingRight: 4,
-                overflow: 'visible',
-            },
-        },
-        '& .MuiButton-label': {
-            fontSize: 10,
-            [theme.breakpoints.down('sm')]: {
-                fontSize: 10,
-            },
-        },
-        '& .MuiButton': {
-            width: 20,
-            height: 30,
-            [theme.breakpoints.down('sm')]: {
-                width: 5,
-                height: 30,
-            },
-        },
-        '& .Button': {
-            width: 20,
-            height: 30,
-            fontSize: 4,
-            [theme.breakpoints.down('sm')]: {
-                width: 10,
-                height: 20,
-                fontSize: 5,
-            },
-        },
-        '& .MuiCheckbox-root': {
-            width: 20,
-            height: 20,
-            color: 'green',
-            [theme.breakpoints.down('sm')]: {
-                width: '5px',
-                height: '5px',
-                color: 'green'
-            },
-        },
-    },
+    
 }));
 
 const ManageMenu = () => {
