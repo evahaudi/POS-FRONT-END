@@ -302,14 +302,16 @@ const ManageOrders = () => {
 
     const columns = [
         { field: 'id', headerName: 'Id' ,},
-        { field: 'items', headerName: 'Items',  },
-        { field: 'customer_name', headerName: 'Customer Name',  },
-        { field: 'table_number', headerName: 'Table Number',  },
+        { field: 'items_ordered', headerName: 'Items',  },
+        { field: 'customername', headerName: 'Cstmer Name',  },
+        { field: 'ordered_tablenumber', headerName: 'Table Number',  },
         { field: 'quantity', headerName: 'Quantity' , },
         { field: 'duration', headerName: 'Duration',  },
         { field: 'delivery_time', headerName: 'Delivery Time' , },
         { field: 'payment_status', headerName: 'Payment Status',  },
         { field: 'total_amount', headerName: 'Total Amount' , },
+        { field: 'order_number', headerName: 'Order Number',  },
+        
         {
             field: 'edit',
             headerName: 'Edit',
