@@ -375,7 +375,12 @@ const ManageOrders = () => {
             [name]: value,
         }));
     };
-
+    
+    const getRowId = (row) => {
+        // Generate a unique ID based on row data
+        return `${row.order_number}-${row.customername}`;
+      };
+      
     return (
         <>
             <div className={classes.container}>
@@ -505,6 +510,7 @@ const ManageOrders = () => {
                             rows={orderData}
                             columns={columns}
                             pageSize={10}
+                            getRowId={getRowId}
                             rowsPerPageOptions={[10, 20, 50]}
                             checkboxSelection
                         />
