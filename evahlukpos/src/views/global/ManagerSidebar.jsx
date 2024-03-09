@@ -104,6 +104,8 @@ const ManagerSidebar = () => {
         fetchUserDetails()
     }, [username])
 
+    console.log("dashboard user data:", userDetails)
+
     const renderProfilePicture = () => {
         if (userDetails && userDetails.user_image) {
             return (
@@ -115,6 +117,8 @@ const ManagerSidebar = () => {
         }
         return <AccountCircleIcon />
     }
+
+    console.log("profile pic is ", renderProfilePicture)
 
     const handleLogout = async () => {
         try {
