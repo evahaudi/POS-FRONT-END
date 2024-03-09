@@ -149,7 +149,7 @@ const ManageMenu = () => {
     }, []);
 
     const fetchMenuData = () => {
-        axios.get('https://evahluk-restful-apis.onrender.com/api/menu/get')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/menu/getall/')
             .then(response => {
                 setMenuData(response.data);
             })
