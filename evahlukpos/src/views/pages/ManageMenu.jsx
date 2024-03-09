@@ -392,14 +392,8 @@ const ManageMenu = () => {
                     <Grid item xs={12} sm={6} md={4}>
                         <Card key={menu.id} className={classes.card} >
                             <CardContent>
-                                <CardHeader>
-                                <Typography variant="h3" color='black'>{menu.menuitem_name}</Typography>
-                                </CardHeader>
-                                <Typography variant="body1" color='green' fontFamily='Verdana' fontStyle='italic' >Description: {menu.description}</Typography>
-                                <Typography variant="body1">Category: {menu.category}</Typography>
-                                <Typography variant="body1">Price: {menu.price}</Typography>
-                                <Typography variant="body1">Vegetarian: {menu.category}</Typography>
-                                <Typography variant="body1">Available: {menu.price}</Typography>
+                                
+                                <Typography variant="h2" color='black'>{menu.menuitem_name}</Typography>
                                 <CardMedia
                                     component="img"
                                     height="194"
@@ -407,6 +401,16 @@ const ManageMenu = () => {
                                     src={menu.image}
                                     alt="menu"
                                 />
+                                <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Description:</Typography>
+                                <Typography variant="body1"  >{menu.description}</Typography>
+                                <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Category:</Typography>
+                                <Typography variant="body1">{menu.category}</Typography>
+                                <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Price:</Typography>
+                                <Typography variant="body1">Ksh.{menu.price}</Typography>
+                                <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Vegetarian:</Typography>
+                                <Typography variant="body1">{menu.is_vegetarian}</Typography>
+                                <Typography variant='h5' color='green' fontFamily='Verdana' fontStyle='italic'>Available:</Typography>
+                               <Typography variant="body1">{menu.is_available}</Typography>
                                 <CardActionArea>
                                     <CardActions>
                                         <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
