@@ -164,7 +164,7 @@ const ManageStaff = () => {
     }, []);
 
     const fetchStaffData = () => {
-        axios.get('http://127.0.0.1:8000/api/waiters/get')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/waiters/get')
             .then(response => {
                 setStaffData(response.data);
             })
@@ -190,7 +190,7 @@ const ManageStaff = () => {
             },
         }
 
-        const url = `http://127.0.0.1:8000/api/waiters/create/?username=${username}&email=${email}&gender=${gender}&fullname=${fullname}&birthdate=${birthdate}&location=${location}&experienceyears=${experienceyears}&phone=${phone}&department=${department}&password=${password}&password2=${password2}&role=${role}&user_image=${user_image}&is_active=${is_active}`
+        const url = `https://evahluk-restful-apis.onrender.com/api/waiters/create/?username=${username}&email=${email}&gender=${gender}&fullname=${fullname}&birthdate=${birthdate}&location=${location}&experienceyears=${experienceyears}&phone=${phone}&department=${department}&password=${password}&password2=${password2}&role=${role}&user_image=${user_image}&is_active=${is_active}`
         axios.post(url, {}, config)
             .then(response => {
                 console.log('Staff created successfully:', response.data);
@@ -240,7 +240,7 @@ const ManageStaff = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/waiters/delete/?id=${id}`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/waiters/delete/?id=${id}`)
                     .then(response => {
                         console.log('Staff member deleted successfully:', response.data);
                         fetchStaffData();
@@ -285,7 +285,7 @@ const ManageStaff = () => {
         };
 
         console.log('Updated Fields:', updatedFieldsObj);
-        const updatePromise = axios.put(`http://127.0.0.1:8000/api/waiters/update/?id=${selectedRows.id}`, updatedFieldsObj);
+        const updatePromise = axios.put(`https://evahluk-restful-apis.onrender.com/api/waiters/update/?id=${selectedRows.id}`, updatedFieldsObj);
 
         updatePromise.then(response => {
             console.log('Staff member updated successfully:', response.data);

@@ -44,7 +44,7 @@ const ManageCustomers = () => {
     };
 
     const fetchCustomersData = () => {
-        axios.get('http://127.0.0.1:8000/api/Customers/getall/')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/Customers/getall/')
             .then(response => {
                 setCustomersData(response.data);
             })
@@ -60,7 +60,7 @@ const ManageCustomers = () => {
             },
         };
 
-        axios.post('http://127.0.0.1:8000/api/Customers/create/', newCustomer, config)
+        axios.post('https://evahluk-restful-apis.onrender.com/api/Customers/create/', newCustomer, config)
             .then(response => {
                 console.log('Customer created successfully:', response.data);
                 fetchCustomersData(); // Refresh data
@@ -124,7 +124,7 @@ const ManageCustomers = () => {
             },
         };
 
-        axios.put(`http://127.0.0.1:8000/api/Customers/update/${id}/`, modalCustomer, config)
+        axios.put(`https://evahluk-restful-apis.onrender.com/api/Customers/update/${id}/`, modalCustomer, config)
             .then(response => {
                 console.log('Customer updated successfully:', response.data);
                 fetchCustomersData(); // Refresh data

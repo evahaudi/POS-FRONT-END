@@ -156,7 +156,7 @@ const ConfirmOrders = () => {
             ...modalData,
         };
 
-        axios.put(`http://127.0.0.1:8000/api/chef-confirmation/update/${selectedRow.order_number}`, updatedData)
+        axios.put(`https://evahluk-restful-apis.onrender.com/api/chef-confirmation/update/${selectedRow.order_number}`, updatedData)
             .then(response => {
                 console.log('Chef confirmation updated successfully:', response.data);
                 fetchChefConfirmation(); // Refresh data

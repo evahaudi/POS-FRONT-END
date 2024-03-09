@@ -56,7 +56,9 @@ const Profile = () => {
         }
         fetchUserDetails()
     }, [username])
+    
 
+    console.log("user profile details:", userDetails)
     const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${userDetails.user_image}`
     const handleUpdateDetails = () => {}
     

@@ -149,7 +149,7 @@ const ManageMenu = () => {
     }, []);
 
     const fetchMenuData = () => {
-        axios.get('http://127.0.0.1:8000/api/menu/get')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/menu/get')
             .then(response => {
                 setMenuData(response.data);
             })
@@ -173,7 +173,7 @@ const ManageMenu = () => {
             },
         };
 
-        const url = `http://127.0.0.1:8000/api/menu/create`;
+        const url = `https://evahluk-restful-apis.onrender.com/api/menu/create`;
 
         axios.post(url, {
             menuitem_name,
@@ -225,7 +225,7 @@ const ManageMenu = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/menu/delete/${id}`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/menu/delete/${id}`)
                     .then(response => {
                         console.log('Menu item deleted successfully:', response.data);
                         fetchMenuData();
@@ -270,7 +270,7 @@ const ManageMenu = () => {
             },
         };
 
-        axios.put(`http://127.0.0.1:8000/api/menu/update/${id}`, updatedFields, config)
+        axios.put(`https://evahluk-restful-apis.onrender.com/api/menu/update/${id}`, updatedFields, config)
             .then(response => {
                 console.log('Menu item updated successfully:', response.data);
                 fetchMenuData(); // Refresh data

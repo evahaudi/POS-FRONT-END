@@ -158,7 +158,7 @@ const ManageOrders = () => {
     }, []);
 
     const fetchOrderData = () => {
-        axios.get('http://127.0.0.1:8000/api/order/getall/')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/order/getall/')
             .then(response => {
                 setOrderData(response.data);
             })
@@ -186,7 +186,7 @@ const ManageOrders = () => {
             total_amount,
         };
 
-        axios.post('http://127.0.0.1:8000/api/order/create/', orderData, config)
+        axios.post('https://evahluk-restful-apis.onrender.com/api/order/create/', orderData, config)
             .then(response => {
                 console.log('Order created successfully:', response.data);
                 fetchOrderData();
@@ -229,7 +229,7 @@ const ManageOrders = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/order/delete/${id}/`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/order/delete/${id}/`)
                     .then(response => {
                         console.log('Order deleted successfully:', response.data);
                         fetchOrderData();

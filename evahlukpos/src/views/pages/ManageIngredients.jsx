@@ -59,7 +59,7 @@ const ManageIngredients = () => {
     }, []);
 
     const fetchIngredientsData = () => {
-        axios.get('http://127.0.0.1:8000/api/ingredientsusage/get')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/ingredientsusage/get')
             .then(response => {
                 setIngredientsData(response.data);
             })
@@ -71,7 +71,7 @@ const ManageIngredients = () => {
     const handleCreateIngredient = () => {
         const { ingredient_name, quantity, unit, price } = newIngredient;
 
-        axios.post('http://127.0.0.1:8000/api/ingredientsusage/create', {
+        axios.post('https://evahluk-restful-apis.onrender.com/api/ingredientsusage/create', {
             ingredient_name,
             quantity,
             unit,
@@ -114,7 +114,7 @@ const ManageIngredients = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/ingredientsusage/delete/${id}`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/ingredientsusage/delete/${id}`)
                     .then(response => {
                         console.log('Ingredient deleted successfully:', response.data);
                         fetchIngredientsData();
@@ -139,7 +139,7 @@ const ManageIngredients = () => {
             return;
         }
 
-        axios.put(`http://127.0.0.1:8000/api/ingredientsusage/update/${selectedRows.id}`, modalIngredient)
+        axios.put(`https://evahluk-restful-apis.onrender.com/api/ingredientsusage/update/${selectedRows.id}`, modalIngredient)
             .then(response => {
                 console.log('Ingredient updated successfully:', response.data);
                 fetchIngredientsData(); // Refresh data

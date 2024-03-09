@@ -63,7 +63,7 @@ const ManageTable = () => {
     }, []);
 
     const fetchTableData = () => {
-        axios.get('http://127.0.0.1:8000/api/table/get')
+        axios.get('https://evahluk-restful-apis.onrender.com/api/table/get')
             .then(response => {
                 setTableData(response.data);
             })
@@ -75,7 +75,7 @@ const ManageTable = () => {
     const handleCreateTable = () => {
         const { capacity, table_number, location } = newTable;
 
-        axios.post('http://127.0.0.1:8000/api/table/create', {
+        axios.post('https://evahluk-restful-apis.onrender.com/api/table/create', {
             capacity,
             table_number,
             location
@@ -116,7 +116,7 @@ const ManageTable = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/table/delete/${id}`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/table/delete/${id}`)
                     .then(response => {
                         console.log('Table deleted successfully:', response.data);
                         fetchTableData();
@@ -141,7 +141,7 @@ const ManageTable = () => {
             return;
         }
 
-        axios.put(`http://127.0.0.1:8000/api/table/update/${selectedRows.id}`, modalTable)
+        axios.put(`https://evahluk-restful-apis.onrender.com/api/table/update/${selectedRows.id}`, modalTable)
             .then(response => {
                 console.log('Table updated successfully:', response.data);
                 fetchTableData(); // Refresh data

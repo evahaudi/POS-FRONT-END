@@ -174,7 +174,7 @@ const ManageStock = () => {
             },
         };
 
-        const url = `http://127.0.0.1:8000/api/stock/create/?stock_name=${stock_name}&price=${price}&original_quantity=${original_quantity}&unit=${unit}`;
+        const url = `https://evahluk-restful-apis.onrender.com/api/stock/create/?stock_name=${stock_name}&price=${price}&original_quantity=${original_quantity}&unit=${unit}`;
 
         axios.post(url, {}, config)
             .then(response => {
@@ -215,7 +215,7 @@ const ManageStock = () => {
         }).then((result) => {
 
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/stock/delete/?id=${id}`)
+                axios.delete(`https://evahluk-restful-apis.onrender.com/api/stock/delete/?id=${id}`)
                     .then(response => {
                         console.log('Stock deleted successfully:', response.data);
                         fetchStockData();
@@ -261,7 +261,7 @@ const ManageStock = () => {
 
         console.log('Updated Fields:', updatedFieldsObj);
 
-        const updatePromise = axios.put(`http://127.0.0.1:8000/api/stock/update/?id=${selectedRows.id}`, updatedFieldsObj);
+        const updatePromise = axios.put(`https://evahluk-restful-apis.onrender.com/api/stock/update/?id=${selectedRows.id}`, updatedFieldsObj);
 
         updatePromise.then(response => {
             console.log('Stock updated successfully:', response.data);
