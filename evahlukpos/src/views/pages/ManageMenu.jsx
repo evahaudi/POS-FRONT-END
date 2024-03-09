@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { TextField, Button, Box, Modal, useTheme } from '@material-ui/core'
-import { Typography, Grid, Card, CardContent, CardMedia, CardActions,CardActionArea,CardHeader } from '@mui/material';
+import { Typography, Grid, Card, CardContent, CardMedia, CardActions, CardActionArea, CardHeader } from '@mui/material';
 import Swal from 'sweetalert2';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -378,7 +377,7 @@ const ManageMenu = () => {
             [name]: value,
         }));
     };
-    
+
     const imageUrl = `https://evahluk-restful-apis.onrender.com/media/user_images/${menuData.image}`
     return (
         <>
@@ -466,31 +465,35 @@ const ManageMenu = () => {
                     </CardContent>
                 </Card>
             </div>
-            <br/>
+            <br />
             {menuData.map(menu => (
-                <Card key={menu.id} className={classes.card} >
-                    <CardContent>
-                        {/* <CardHeader> */}
-                        <Typography variant="h6">{menu.menuitem_name}</Typography>
-                        {/* </CardHeader> */}
-                        <Typography variant="body1" color='green' fontFamily='Verdana' fontStyle='italic' >Description: {menu.description}</Typography>
-                        <Typography variant="body1">Category: {menu.category}</Typography>
-                        <Typography variant="body1">Price: {menu.price}</Typography>
-                        <Typography variant="body1">Vegetarian: {menu.category}</Typography>
-                        <Typography variant="body1">Available: {menu.price}</Typography>
-                        <CardMedia><img src={imageUrl} alt="menu" className={classes.image}/></CardMedia>
-                        <CardActionArea>
-                         <CardActions>
-                        <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
-                        <br/>
-                        <Button variant="contained" style={{ marginLeft: '10px' }} color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
-                        </CardActions>
-                        </CardActionArea>
-                    </CardContent>
-                </Card>
-                
+                <Grid container spacing={2} justifyContent="center">
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card key={menu.id} className={classes.card} >
+                            <CardContent>
+                                {/* <CardHeader> */}
+                                <Typography variant="h6">{menu.menuitem_name}</Typography>
+                                {/* </CardHeader> */}
+                                <Typography variant="body1" color='green' fontFamily='Verdana' fontStyle='italic' >Description: {menu.description}</Typography>
+                                <Typography variant="body1">Category: {menu.category}</Typography>
+                                <Typography variant="body1">Price: {menu.price}</Typography>
+                                <Typography variant="body1">Vegetarian: {menu.category}</Typography>
+                                <Typography variant="body1">Available: {menu.price}</Typography>
+                                <CardMedia><img src={imageUrl} alt="menu" className={classes.image} /></CardMedia>
+                                <CardActionArea>
+                                    <CardActions>
+                                        <Button variant="contained" color="primary" onClick={() => handleEdit(menu)}>Edit</Button>
+                                        <br />
+                                        <Button variant="contained" style={{ marginLeft: '10px' }} color="secondary" onClick={() => handleDelete(menu)}>Delete</Button>
+                                    </CardActions>
+                                </CardActionArea>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                </Grid>
+
             ))}
-            <br/>
+            <br />
             <Modal
                 open={open}
                 onClose={handleCloseModal}
@@ -608,8 +611,7 @@ const ManageMenu = () => {
                     </Box>
                 </div>
             </Modal>
-        {/* </div > */}
-            {/* </div > */}
+          
         </>
     );
 }
