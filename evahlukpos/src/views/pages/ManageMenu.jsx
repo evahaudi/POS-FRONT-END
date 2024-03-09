@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
-import { Card, Grid,CardContent,CardActions,CardActionArea,CardMedia,CardHeader, Typography, TextField, Button, Box, Modal, useTheme } from '@material-ui/core'
+import { TextField, Button, Box, Modal, useTheme } from '@material-ui/core'
+import { Typography, Grid, Card, CardContent, CardMedia, CardActions,CardActionArea,CardHeader } from '@mui/material';
 import Swal from 'sweetalert2';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
@@ -469,9 +470,9 @@ const ManageMenu = () => {
             {menuData.map(menu => (
                 <Card key={menu.id} className={classes.card} >
                     <CardContent>
-                        <CardHeader>
+                        {/* <CardHeader> */}
                         <Typography variant="h6">{menu.menuitem_name}</Typography>
-                        </CardHeader>
+                        {/* </CardHeader> */}
                         <Typography variant="body1" color='green' fontFamily='Verdana' fontStyle='italic' >Description: {menu.description}</Typography>
                         <Typography variant="body1">Category: {menu.category}</Typography>
                         <Typography variant="body1">Price: {menu.price}</Typography>
