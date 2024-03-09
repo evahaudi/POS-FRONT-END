@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
 import { Card, Grid, CardContent, Typography, TextField, Button, Box, Modal, useTheme} from '@material-ui/core'
 import Swal from 'sweetalert2';
+import { v4 as uuidv4 } from 'uuid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const useStyles = makeStyles((theme) => ({
@@ -380,7 +381,7 @@ const ManageOrders = () => {
     
     const getRowId = (row) => {
         // Generate a unique ID based on row data
-        return `${row.order_number}-${row.customername}`;
+        return uuidv4();
       };
       
     return (
