@@ -471,9 +471,9 @@ const ManageMenu = () => {
                     <Grid item xs={12} sm={6} md={4}>
                         <Card key={menu.id} className={classes.card} >
                             <CardContent>
-                                {/* <CardHeader> */}
-                                <Typography variant="h6">{menu.menuitem_name}</Typography>
-                                {/* </CardHeader> */}
+                                <CardHeader>
+                                <Typography variant="h3" color='black'>{menu.menuitem_name}</Typography>
+                                </CardHeader>
                                 <Typography variant="body1" color='green' fontFamily='Verdana' fontStyle='italic' >Description: {menu.description}</Typography>
                                 <Typography variant="body1">Category: {menu.category}</Typography>
                                 <Typography variant="body1">Price: {menu.price}</Typography>
